@@ -298,3 +298,85 @@ class MixinAddedMembersTest {
 			return resources.get(path);
 		}
 	}
+
+	/** The merged class: a public field {@code parts} (public, so the orphaned-field rule has nothing to say). */
+	private static byte[] target() {
+		ClassWriter cw = new ClassWriter(0);
+		cw.visit(Opcodes.V21, Opcodes.ACC_PUBLIC, TARGET, null, "java/lang/Object", null);
+		cw.visitField(Opcodes.ACC_PUBLIC, "parts", "Ljava/util/List;", null, null).visitEnd();
+		cw.visitEnd();
+		return cw.toByteArray();
+	}
+
+	private static MixinBuilder mixin(String name, Integer priority) {
+		return new MixinBuilder(name, priority);
+	}
+
+	private static final class MixinBuilder {
+		final String name;
+		final ClassWriter cw = new ClassWriter(0);
+
+		MixinBuilder(String name, Integer priority) {
+			this.name = name;
+			cw.visit(Opcodes.V21, Opcodes.ACC_PUBLIC | Opcodes.ACC_ABSTRACT, name, null, "java/lang/Object", null);
+			AnnotationVisitor mixin = cw.visitAnnotation("Lorg/spongepowered/asm/mixin/Mixin;", false);
+			AnnotationVisitor targets = mixin.visitArray("value");
+			targets.visit(null, Type.getObjectType(TARGET));
+			targets.visitEnd();
+			if (priority != null) mixin.visit("priority", priority);
+			mixin.visitEnd();
+		}
+
+		MixinBuilder shadowField(String field) {
+			FieldVisitor fv = cw.visitField(Opcodes.ACC_PRIVATE, field, field.equals("parts") ? "Ljava/util/List;" : MESH,
+					null, null);
+			fv.visitAnnotation("Lorg/spongepowered/asm/mixin/Shadow;", true).visitEnd();
+			fv.visitEnd();
+			return this;
+		}
+
+		MixinBuilder uniqueField(String field) {
+			FieldVisitor fv = cw.visitField(Opcodes.ACC_PRIVATE, field, MESH, null, null);
+			fv.visitAnnotation("Lorg/spongepowered/asm/mixin/Unique;", false).visitEnd();
+			fv.visitEnd();
+			return this;
+		}
+
+		MixinBuilder method(String method, String desc) {
+			MethodVisitor mv = cw.visitMethod(Opcodes.ACC_PUBLIC, method, desc, null, null);
+			mv.visitCode();
+			mv.visitInsn(Opcodes.ICONST_0);
+			mv.visitInsn(Opcodes.IRETURN);
+			mv.visitMaxs(1, 1);
+			mv.visitEnd();
+			return this;
+		}
+
+		MixinBuilder shadowMethod(String method, String desc) {
+			MethodVisitor mv = cw.visitMethod(Opcodes.ACC_PUBLIC | Opcodes.ACC_ABSTRACT, method, desc, null, null);
+			mv.visitAnnotation("Lorg/spongepowered/asm/mixin/Shadow;", true).visitEnd();
+			mv.visitEnd();
+			return this;
+		}
+
+		/** An {@code @Inject} handler named {@code method}, into the target's (absent) {@code render}. */
+		MixinBuilder injector(String method) {
+			MethodVisitor mv = cw.visitMethod(Opcodes.ACC_PRIVATE, method, "()V", null, null);
+			AnnotationVisitor inject = mv.visitAnnotation("Lorg/spongepowered/asm/mixin/injection/Inject;", true);
+			AnnotationVisitor selectors = inject.visitArray("method");
+			selectors.visit(null, "parts");
+			selectors.visitEnd();
+			inject.visitEnd();
+			mv.visitCode();
+			mv.visitInsn(Opcodes.RETURN);
+			mv.visitMaxs(0, 1);
+			mv.visitEnd();
+			return this;
+		}
+
+		byte[] bytes() {
+			cw.visitEnd();
+			return cw.toByteArray();
+		}
+	}
+}
