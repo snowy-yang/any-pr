@@ -298,3 +298,303 @@ public final class DialogLang {
 		"details.suspected.header", "可能的问题（未确认，不需要你做选择）",
 		"compat.more", "之后还会显示另外 {0} 项。",
 			"title.deps", "Forbric —— 有 mod 缺少它需要的前置",
+			"title.mixins", "Forbric —— 有两个 mod 互相不配套",
+			"title.both", "Forbric —— 有 mod 缺前置，还有 mod 互相不配套",
+			"title.deps.many", "Forbric —— 有些 mod 缺少它们需要的前置",
+			"title.mixins.many", "Forbric —— 有些 mod 互相不配套",
+			"button.continue", "继续启动",
+			"button.quit", "退出",
+			"button.details.show", "显示详细信息",
+			"button.details.hide", "隐藏详细信息",
+			"summary.deps.one", "有 1 个 mod 缺少它需要的前置：",
+			"summary.deps.many", "有 {0} 个 mod 缺少它需要的前置：",
+			"summary.mixins.one", "有 1 个 mod 没能接上它本来要配合的那个 mod：",
+			"summary.mixins.many", "有 {0} 个 mod 没能接上它们本来要配合的那些 mod：",
+			"summary.more", "……还有 {0} 个，完整列表在详细信息里。",
+			"bullet.absent", "{0} 需要 {1}，但它没装",
+			"bullet.version", "{0} 需要 {1} {2}，而你装的是 {3}",
+			"bullet.mixin", "{0} 没能接上它本来要配合的那个 mod",
+			"fix.header", "可以试试这些：",
+			"fix.install", "装上 {0}。{1} 是 {2} 的 mod，所以下 {2} 版最稳妥 —— 在 Forbric 上，别的加载器的版本也可能顶用。",
+			"fix.version", "把 {0} 换成符合 {1} 的版本。你现在装的是 {2}。",
+			"fix.mixin", "两个 mod 都装了，也都不缺东西，只是这两个版本不配套。把 {0} 换成和它要配合的那个 mod "
+					+ "同期发布的版本，可能就好了。",
+			"fix.remove", "或者把 {0} 从 mods 文件夹里拿出来。Forbric 会照常加载其余的 mod，别的照样能玩。",
+			"note.deps", "你让它启动，Forbric 就会照常启动。但前置没装齐的 mod 通常会在很久以后才出问题，而那个报错里"
+					+ "往往不会提到上面任何一个 mod —— 可能是世界空空如也、某个方块不见了，或者创建世界时直接崩溃。"
+					+ "所以最好先修好再玩。",
+			"note.mixins", "这不会被任何地方报成“缺前置”，因为它确实不是：两个 mod 都装了，而且各自都在对方要求的"
+					+ "版本范围里。只是这两个版本不配套。",
+			"details.deps.header", "没满足的前置要求",
+			"details.mixins.header", "没能接上的 mod",
+			"details.by", "{0}（{1}，{2}）",
+			"details.needs.absent", "需要 {0} {1}  —  没装",
+			"details.needs.version", "需要 {0} {1}  —  已装：{2}",
+			"details.search", "搜索：{0}",
+			"details.mixin", "{0}  —  {1}",
+			"details.anchors", "没找到 {0}",
+			"isolation.title", "Forbric —— 上次游戏崩溃了",
+			"isolation.intro", "上次运行时游戏崩溃了，崩溃指向这些 mod：",
+			"isolation.intro.clash", "上次运行时游戏崩溃了，因为这些 mod 和 {0} 互相冲突。Forbric 可以保留 {0}，"
+					+ "不加载下面这些再启动：",
+			"isolation.bullet", "{0}（{1}）",
+			"isolation.without", "选择不加载它们启动，Forbric 会把它们的文件名写进 mods 文件夹旁边的 "
+					+ "forbric-disabled.txt，之后不再加载它们。文件本身不会被移动。想重新启用哪个，就把它那一行从 "
+					+ "forbric-disabled.txt 里删掉。",
+			"isolation.note", "这只是个猜测：崩溃指向这些 mod，并不能证明是它们的问题。关掉这个窗口，"
+					+ "游戏会像以前一样加载全部 mod 启动。",
+			"isolation.details.report", "崩溃报告在 crash-reports/{0}，分析在 .forbric-kernel/crash-analysis.txt。",
+			"button.isolation.without", "不加载 {0} 启动",
+			"button.isolation.everything", "全部照常启动",
+			"details.log", "同样的内容也在 logs/latest.log 里，搜 [Forbric/Deps] 就能找到。"));
+
+	// -------------------------------------------------------------------------------------------------------
+	// Traditional Chinese.
+	// -------------------------------------------------------------------------------------------------------
+	public static final DialogLang ZH_TW = new DialogLang("zh_tw", table(
+		"compat.continuePlaying", "繼續遊戲",
+		"compat.returnTitle", "返回標題畫面",
+		"compat.reportDetails", "詳細原因請見 Mods 畫面與相容性報告。",
+		"compat.title", "部分 mod 的必要功能無法執行",
+		"compat.intro", "Forbric 已確認以下必要功能在目前實例中無法執行：",
+		"compat.note", "你可以選擇本次繼續啟動，或結束後調整 mod。關閉此視窗不代表同意繼續。",
+		"details.required.header", "無法執行的必要功能",
+		"details.suspected.header", "可能的問題（未確認，不需要你做選擇）",
+		"compat.more", "之後還會顯示另外 {0} 項。",
+			"title.deps", "Forbric —— 有模組缺少必要的前置模組",
+			"title.mixins", "Forbric —— 有兩個模組彼此搭不起來",
+			"title.both", "Forbric —— 有模組缺少前置模組，也有模組彼此搭不起來",
+			"title.deps.many", "Forbric —— 有些模組缺少必要的前置模組",
+			"title.mixins.many", "Forbric —— 有些模組彼此搭不起來",
+			"button.continue", "仍要啟動",
+			"button.quit", "結束",
+			"button.details.show", "顯示詳細資訊",
+			"button.details.hide", "隱藏詳細資訊",
+			"summary.deps.one", "有一個模組缺少它需要的東西：",
+			"summary.deps.many", "有 {0} 個模組缺少它們需要的東西：",
+			"summary.mixins.one", "有一個模組無法接上它原本要搭配的模組：",
+			"summary.mixins.many", "有 {0} 個模組無法接上它們原本要搭配的模組：",
+			"summary.more", "……還有其他 {0} 個，完整清單請看詳細資訊。",
+			"bullet.absent", "{0} 需要 {1}，但你沒有安裝",
+			"bullet.version", "{0} 需要 {1} {2}，但你安裝的是 {3}",
+			"bullet.mixin", "{0} 無法接上它原本要搭配的模組",
+			"fix.header", "可能的解決方法：",
+			"fix.install", "安裝 {0}。{1} 是 {2} 模組，所以裝 {2} 版本最保險——在 Forbric "
+					+ "上，做給其他載入器的版本通常也能滿足它。",
+			"fix.version", "把 {0} 換成符合 {1} 的版本。你現在裝的是 {2}。",
+			"fix.mixin", "兩個模組都有安裝，也都不缺前置模組——只是這兩個版本搭不起來。換一個和它要搭配的模組差不多時"
+					+ "期發布的 {0}，也許就能解決。",
+			"fix.remove", "或者把 {0} 從 mods 資料夾移走。Forbric 會照常載入其餘模組，你其他的模組還是能用。",
+			"note.deps", "你要它啟動，Forbric 還是會啟動。不過缺前置模組的問題通常要到很久以後才發作，而且到時候的錯"
+					+ "誤訊息不會提到這兩個模組——可能是空蕩蕩的世界、少了某個方塊，或是建立世界時直接當掉——所以最好"
+					+ "先處理好再玩。",
+			"note.mixins", "不會有任何地方把這件事回報成缺少前置模組，因為它不是：兩個模組都有安裝，版本也都落在對方"
+					+ "要求的範圍內。單純就是這兩個版本搭不起來。",
+			"details.deps.header", "未滿足的需求",
+			"details.mixins.header", "無法接上的模組",
+			"details.by", "{0}  ({1}, {2})",
+			"details.needs.absent", "需要 {0} {1}  —  未安裝",
+			"details.needs.version", "需要 {0} {1}  —  已安裝：{2}",
+			"details.search", "搜尋：{0}",
+			"details.mixin", "{0}  —  {1}",
+			"details.anchors", "找不到 {0}",
+			"isolation.title", "Forbric —— 上次遊戲崩潰了",
+			"isolation.intro", "上次執行時遊戲崩潰了，崩潰指向這些模組：",
+			"isolation.intro.clash", "上次執行時遊戲崩潰了，因為這些模組和 {0} 互相衝突。Forbric 可以保留 {0}，"
+					+ "不載入下面這些再啟動：",
+			"isolation.bullet", "{0}（{1}）",
+			"isolation.without", "選擇不載入它們啟動，Forbric 會把它們的檔名寫進 mods 資料夾旁邊的 "
+					+ "forbric-disabled.txt，之後不再載入它們。檔案本身不會被移動。想重新啟用哪個，就把它那一行從 "
+					+ "forbric-disabled.txt 裡刪掉。",
+			"isolation.note", "這只是猜測：崩潰指向這些模組，並不能證明是它們的問題。關掉這個視窗，"
+					+ "遊戲會像以前一樣載入全部模組啟動。",
+			"isolation.details.report", "崩潰報告在 crash-reports/{0}，分析在 .forbric-kernel/crash-analysis.txt。",
+			"button.isolation.without", "不載入 {0} 啟動",
+			"button.isolation.everything", "全部照常啟動",
+			"details.log", "同樣的內容也記在 logs/latest.log 的 [Forbric/Deps] 底下。"));
+
+	// -------------------------------------------------------------------------------------------------------
+	// Japanese.
+	// -------------------------------------------------------------------------------------------------------
+	public static final DialogLang JA = new DialogLang("ja", table(
+		"compat.continuePlaying", "プレイを続ける",
+		"compat.returnTitle", "タイトルに戻る",
+		"compat.reportDetails", "詳しい理由は Mods 画面と互換性レポートで確認できます。",
+		"compat.title", "必要な mod 機能を利用できません",
+		"compat.intro", "この環境では次の必要な機能が動作しないことを Forbric が確認しました：",
+		"compat.note", "今回だけ起動を続けるか、終了して mod を変更できます。ウィンドウを閉じても続行には同意したことになりません。",
+		"details.required.header", "動作しない必要な機能",
+		"details.suspected.header", "考えられる問題（未確認・選択は不要）",
+		"compat.more", "このあと、ほかの {0} 件も表示します。",
+			"title.deps", "Forbric ——必要な前提MODが見つからないMODがあります",
+			"title.mixins", "Forbric ——2つのMODがかみ合っていません",
+			"title.both", "Forbric ——前提MODが足りないMODと、かみ合っていないMODがあります",
+			"title.deps.many", "Forbric ——必要な前提MODが見つからないMODが複数あります",
+			"title.mixins.many", "Forbric ——かみ合っていないMODが複数あります",
+			"button.continue", "このまま起動",
+			"button.quit", "終了",
+			"button.details.show", "詳細を表示",
+			"button.details.hide", "詳細を隠す",
+			"summary.deps.one", "1つのMODに、必要な前提MODが足りません：",
+			"summary.deps.many", "{0}個のMODに、必要な前提MODが足りません：",
+			"summary.mixins.one", "1つのMODが、組み合わせて動くはずのMODに組み込めませんでした：",
+			"summary.mixins.many", "{0}個のMODが、組み合わせて動くはずのMODに組み込めませんでした：",
+			"summary.more", "……ほか {0} 件。すべての一覧は「詳細」で確認できます。",
+			"bullet.absent", "{0} には {1} が必要ですが、インストールされていません",
+			"bullet.version", "{0} には {1} {2} が必要ですが、お使いのバージョンは {3} です",
+			"bullet.mixin", "{0} は、組み合わせて動くはずのMODに組み込めませんでした",
+			"fix.header", "解決できるかもしれない方法：",
+			"fix.install", "{0} をインストールしてください。{1} は {2} 向けのMODなので、{2} "
+					+ "版を入れるのがいちばん確実です——Forbric では別のローダー向けの版でも条件を満たせることがあり"
+					+ "ます。",
+			"fix.version", "{0} を {1} に一致するバージョンに変えてください。現在は {2} です。",
+			"fix.mixin", "どちらのMODもインストールされていて、足りないものもありません——ただ、ビルドどうしがかみ合"
+					+ "っていないだけです。組み込み先のMODと近い時期に公開された {0} のバージョンにすると、直ること"
+					+ "があります。",
+			"fix.remove", "または、{0} を mods フォルダーから取り出してください。Forbric "
+					+ "は残りをそのまま読み込み続けるので、ほかのMODは変わらず動きます。",
+			"note.deps", "ご希望であれば、Forbric はこのまま起動できます。ただし前提MODが足りないMODは、ずっとあとに"
+					+ "なってから——どちらのMOD名も出てこないエラー、何も生成されないワールド、消えたブロック、ワー"
+					+ "ルド作成中のクラッシュといった形で——問題が出ることがほとんどです。遊ぶ前に直しておくことをお"
+					+ "すすめします。",
+			"note.mixins", "これは前提MODの不足としては報告されません。実際そうではないからです：どちらのMODもインス"
+					+ "トールされていて、それぞれが相手の求めるバージョン範囲に収まっています。ただ、2つのビルドが"
+					+ "かみ合っていないだけです。",
+			"details.deps.header", "満たされていない前提条件",
+			"details.mixins.header", "組み込めなかったMOD",
+			"details.by", "{0}  （{1}、{2}）",
+			"details.needs.absent", "必要：{0} {1}  ——  未インストール",
+			"details.needs.version", "必要：{0} {1}  ——  インストール済み：{2}",
+			"details.search", "検索：{0}",
+			"details.mixin", "{0}  ——  {1}",
+			"details.anchors", "{0} が見つかりませんでした",
+			"isolation.title", "Forbric — 前回ゲームがクラッシュしました",
+			"isolation.intro", "前回の起動でゲームがクラッシュしました。クラッシュはこれらのMODを指しています:",
+			"isolation.intro.clash", "前回の起動で、これらのMODが {0} と競合したためゲームがクラッシュしました。"
+					+ "Forbric は {0} を残し、次のMODなしで起動できます:",
+			"isolation.bullet", "{0}（{1}）",
+			"isolation.without", "これらなしで起動すると、ファイル名が mods フォルダーの隣にある forbric-disabled.txt "
+					+ "に書き込まれ、Forbric はそれらを読み込みません。ファイル自体はそのまま残ります。元に戻すには、"
+					+ "forbric-disabled.txt からその行を削除してください。",
+			"isolation.note", "これは推測です。クラッシュがこれらのMODを指していても、"
+					+ "原因だと証明されたわけではありません。このウィンドウを閉じると、"
+					+ "これまでどおりすべてのMODで起動します。",
+			"isolation.details.report", "クラッシュレポートは crash-reports/{0}、分析は "
+					+ ".forbric-kernel/crash-analysis.txt にあります。",
+			"button.isolation.without", "{0} なしで起動",
+			"button.isolation.everything", "すべて読み込んで起動",
+			"details.log", "同じ内容は logs/latest.log の [Forbric/Deps] にも記録されています。"));
+
+	// -------------------------------------------------------------------------------------------------------
+	// Korean.
+	// -------------------------------------------------------------------------------------------------------
+	public static final DialogLang KO = new DialogLang("ko", table(
+		"compat.continuePlaying", "계속 플레이",
+		"compat.returnTitle", "타이틀로 돌아가기",
+		"compat.reportDetails", "자세한 내용은 Mods 화면과 호환성 보고서에서 확인할 수 있습니다.",
+		"compat.title", "필수 모드 기능을 사용할 수 없습니다",
+		"compat.intro", "Forbric이 현재 환경에서 다음 필수 기능이 작동하지 않는 것을 확인했습니다:",
+		"compat.note", "이번 실행을 계속하거나 종료 후 모드를 변경할 수 있습니다. 창을 닫는 것은 계속 실행에 동의하는 것이 아닙니다.",
+		"details.required.header", "작동하지 않는 필수 기능",
+		"details.suspected.header", "가능한 문제 (확인되지 않음, 선택할 필요 없음)",
+		"compat.more", "이후에 나머지 {0}개도 표시됩니다.",
+			"title.deps", "Forbric - 어떤 모드에 필요한 것이 빠져 있습니다",
+			"title.mixins", "Forbric - 두 모드가 서로 맞지 않습니다",
+			"title.both", "Forbric - 일부 모드는 필요한 것이 빠져 있고, 일부 모드는 서로 맞지 않습니다",
+			"title.deps.many", "Forbric - 일부 모드에 필요한 것이 빠져 있습니다",
+			"title.mixins.many", "Forbric - 일부 모드가 서로 맞지 않습니다",
+			"button.continue", "그래도 실행",
+			"button.quit", "종료",
+			"button.details.show", "자세한 정보 보기",
+			"button.details.hide", "자세한 정보 숨기기",
+			"summary.deps.one", "모드 하나에 필요한 것이 빠져 있습니다:",
+			"summary.deps.many", "모드 {0}개에 필요한 것이 빠져 있습니다:",
+			"summary.mixins.one", "모드 하나가 함께 쓰이도록 만들어진 다른 모드에 연결되지 못했습니다:",
+			"summary.mixins.many", "모드 {0}개가 함께 쓰이도록 만들어진 다른 모드에 연결되지 못했습니다:",
+			"summary.more", "……그 외 {0}개가 더 있습니다. 전체 목록은 자세히 보기에서 확인할 수 있습니다.",
+			"bullet.absent", "{0}에는 {1}이(가) 필요하지만 설치되어 있지 않습니다",
+			"bullet.version", "{0}에는 {1} {2}이(가) 필요하지만, 설치된 버전은 {3}입니다",
+			"bullet.mixin", "{0}이(가) 함께 쓰이도록 만들어진 모드에 연결되지 못했습니다",
+			"fix.header", "이렇게 하면 해결될 수 있습니다:",
+			"fix.install", "{0}을(를) 설치해 보세요. {1}은(는) {2} 모드이므로 {2} 버전을 받는 것이 가장 안전합니다 "
+					+ "- Forbric에서는 다른 로더용 버전으로도 해결될 수 있습니다.",
+			"fix.version", "{0}을(를) {1}에 맞는 버전으로 바꿔 보세요. 지금 설치된 버전은 {2}입니다.",
+			"fix.mixin", "두 모드 모두 설치되어 있고 빠진 것도 없습니다. 단지 두 빌드가 서로 맞지 않을 뿐입니다. "
+					+ "연결 대상 모드와 비슷한 시기에 나온 {0} 버전을 쓰면 해결될 수 있습니다.",
+			"fix.remove", "또는 {0}을(를) mods 폴더에서 빼도 됩니다. Forbric은 나머지를 계속 불러오므로 다른 모드는 "
+					+ "그대로 작동합니다.",
+			"note.deps", "원하신다면 Forbric은 이대로도 실행합니다. 다만 필요한 것이 빠진 모드는 보통 한참 뒤에야 "
+					+ "문제를 일으키고, 그때 나오는 오류에는 두 모드의 이름이 모두 나오지 않습니다 - 텅 빈 세계, "
+					+ "사라진 블록, 세계를 만들다 나는 크래시 같은 식입니다. 그래서 플레이 전에 해결해 두는 편이 "
+					+ "좋습니다.",
+			"note.mixins", "이것을 전제 모드 누락으로 알려 주는 곳은 없습니다. 실제로 누락이 아니기 때문입니다. 두 "
+					+ "모드 모두 설치되어 있고, 서로가 요구하는 버전 범위도 만족합니다. 단지 두 빌드가 서로 맞지 "
+					+ "않을 뿐입니다.",
+			"details.deps.header", "충족되지 않은 요구 사항",
+			"details.mixins.header", "연결하지 못한 모드",
+			"details.by", "{0}  ({1}, {2})",
+			"details.needs.absent", "{0} {1} 필요  —  설치되지 않음",
+			"details.needs.version", "{0} {1} 필요  —  설치됨: {2}",
+			"details.search", "검색: {0}",
+			"details.mixin", "{0}  —  {1}",
+			"details.anchors", "{0}을(를) 찾지 못했습니다",
+			"isolation.title", "Forbric — 지난번에 게임이 크래시되었습니다",
+			"isolation.intro", "지난번 실행에서 게임이 크래시되었고, 크래시는 다음 모드를 가리킵니다:",
+			"isolation.intro.clash", "지난번 실행에서 다음 모드가 {0}와(과) 서로 충돌해 게임이 크래시되었습니다. "
+					+ "Forbric은 {0}을(를) 남기고 다음 모드 없이 실행할 수 있습니다:",
+			"isolation.bullet", "{0}  ({1})",
+			"isolation.without", "이 모드 없이 실행하면 파일 이름이 mods 폴더 옆의 forbric-disabled.txt에 기록되고, "
+					+ "Forbric은 해당 모드를 불러오지 않습니다. 파일은 그대로 남습니다. 다시 켜려면 forbric-disabled.txt에서 "
+					+ "해당 줄을 지우세요.",
+			"isolation.note", "이것은 추측입니다. 크래시가 이 모드들을 가리킨다고 해서 원인이라는 증거는 아닙니다. 이 "
+					+ "창을 닫으면 이전처럼 모든 모드로 실행합니다.",
+			"isolation.details.report", "크래시 보고서는 crash-reports/{0}, 분석은 "
+					+ ".forbric-kernel/crash-analysis.txt에 있습니다.",
+			"button.isolation.without", "{0} 없이 실행",
+			"button.isolation.everything", "모두 불러와 실행",
+			"details.log", "같은 내용이 logs/latest.log의 [Forbric/Deps] 항목에도 기록되어 있습니다."));
+
+	// -------------------------------------------------------------------------------------------------------
+	// Russian.
+	// -------------------------------------------------------------------------------------------------------
+	public static final DialogLang RU = new DialogLang("ru", table(
+		"compat.continuePlaying", "Продолжить игру",
+		"compat.returnTitle", "Вернуться в меню",
+		"compat.reportDetails", "Подробности доступны на экране Mods и в отчёте о совместимости.",
+		"compat.title", "Необходимые функции модов недоступны",
+		"compat.intro", "Forbric подтвердил, что в этой сборке не работают следующие необходимые функции:",
+		"compat.note", "Можно продолжить этот запуск или выйти и изменить набор модов. Закрытие окна не означает согласие продолжить.",
+		"details.required.header", "Необходимые функции, которые не работают",
+		"details.suspected.header", "Возможные проблемы (не подтверждены, решение не требуется)",
+		"compat.more", "После этого будут показаны ещё {0}.",
+			"title.deps", "Forbric — моду не хватает того, что ему нужно",
+			"title.mixins", "Forbric — два мода не подходят друг другу",
+			"title.both", "Forbric — одним модам не хватает нужного, другие не подходят друг другу",
+			"title.deps.many", "Forbric — некоторым модам не хватает нужного",
+			"title.mixins.many", "Forbric — некоторые моды не подходят друг другу",
+			"button.continue", "Всё равно запустить",
+			"button.quit", "Выход",
+			"button.details.show", "Показать подробности",
+			"button.details.hide", "Скрыть подробности",
+			"summary.deps.one", "Одному моду не хватает того, что ему нужно:",
+			"summary.deps.many", "Модам не хватает того, что им нужно (всего: {0}):",
+			"summary.mixins.one", "Один мод не смог подключиться к другому моду, для которого он сделан:",
+			"summary.mixins.many", "Моды не смогли подключиться к другим модам, для которых они сделаны (всего: "
+					+ "{0}):",
+			"summary.more", "…и ещё {0}. Полный список — в подробностях.",
+			"bullet.absent", "{0}: нужен мод {1}, а он не установлен",
+			"bullet.version", "{0}: нужен {1} версии {2}, а установлена {3}",
+			"bullet.mixin", "{0} не смог подключиться к моду, для которого он сделан",
+			"fix.header", "Что может помочь:",
+			"fix.install", "Установите {0}. {1} — это мод для {2}, поэтому надёжнее всего взять сборку для {2}, но "
+					+ "в Forbric подойдёт и сборка для другого загрузчика.",
+			"fix.version", "Смените {0} на версию, подходящую под {1}. Сейчас установлена {2}.",
+			"fix.mixin", "Оба мода установлены, и ни одному из них ничего не хватает — просто их сборки не "
+					+ "совпадают. Может помочь версия {0}, вышедшая примерно тогда же, что и мод, к которому она "
+					+ "подключается.",
+			"fix.remove", "Или уберите {0} из папки mods. Forbric продолжит загружать всё остальное, так что другие "
+					+ "ваши моды будут работать.",
+			"note.deps", "Если попросите, Forbric запустится и так. Но мод, которому не хватает нужного, обычно "
+					+ "ломается гораздо позже — и в ошибке не будет названия ни одного из модов: пустой мир, "
+					+ "пропавший блок или вылет при создании мира. Лучше починить это до начала игры.",
+			"note.mixins", "Никто не сообщает об этом как о пропущенной зависимости, потому что это не она: оба "
