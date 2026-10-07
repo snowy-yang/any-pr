@@ -298,3 +298,74 @@ public final class HeapPaths {
 			}
 			for (String jar : args.subList(1, args.size())) gameJars.add(new java.util.zip.ZipFile(jar));
 			System.out.println("mod-owned: " + modClasses.size() + " mod classes, " + modFieldNames.size() + " mod field names, " + gameJars.size() + " game jars, " + unreadableModClasses + " unreadable mod classes");
+		}
+		private static void scanMod(byte[] jar) throws IOException {
+			try (var in = new java.util.zip.ZipInputStream(new java.io.ByteArrayInputStream(jar))) {
+				for (var entry = in.getNextEntry(); entry != null; entry = in.getNextEntry()) {
+					String name = entry.getName();
+					if (name.endsWith(".jar")) scanMod(in.readAllBytes());
+					else if (name.endsWith(".class") && !name.startsWith("META-INF/")) {
+						byte[] bytes = in.readAllBytes();
+						modClasses.add(name.substring(0, name.length() - 6).replace('/', '.'));
+						// An unreadable mod class contributes no field names: fewer cuts, so a verdict can only get stricter.
+						try { modFieldNames.addAll(fields(bytes)); } catch (RuntimeException unreadable) { unreadableModClasses++; }
+					}
+				}
+			}
+		}
+		/** label = DeclaringClass.field, as HeapPaths builds it. */
+		static boolean owned(String label) {
+			int dot = label.lastIndexOf('.');
+			String cls = label.substring(0, dot), field = label.substring(dot + 1);
+			int lambda = cls.indexOf("$$Lambda");
+			String host = lambda >= 0 ? cls.substring(0, lambda) : cls;
+			if (modClasses.contains(host)) return true;
+			if (!modFieldNames.contains(field)) return false;
+			Set<String> declared = gameFields.computeIfAbsent(host, ModOwnership::gameDeclared);
+			return declared != null && !declared.contains(field);
+		}
+		private static Set<String> gameDeclared(String cls) {
+			String entry = cls.replace('.', '/') + ".class";
+			for (var jar : gameJars) {
+				var found = jar.getEntry(entry);
+				if (found != null) try (var in = jar.getInputStream(found)) { return new HashSet<>(fields(in.readAllBytes())); } catch (IOException e) { throw new java.io.UncheckedIOException(e); }
+			}
+			return null; // not a game class (JDK, library, Forbric): never attributed to a mod by name
+		}
+		/** Field names declared by one class file (constant pool walk, no bytecode library). */
+		static List<String> fields(byte[] b) {
+			java.nio.ByteBuffer in = java.nio.ByteBuffer.wrap(b);
+			if (in.getInt() != 0xCAFEBABE) return List.of();
+			in.getShort(); in.getShort();
+			int count = in.getShort() & 0xFFFF; String[] utf = new String[count];
+			for (int i = 1; i < count; i++) {
+				int tag = in.get() & 0xFF;
+				switch (tag) {
+					case 1 -> { int len = in.getShort() & 0xFFFF; byte[] s = new byte[len]; in.get(s); utf[i] = new String(s, java.nio.charset.StandardCharsets.UTF_8); }
+					case 3, 4 -> in.getInt();
+					case 5, 6 -> { in.getLong(); i++; }
+					case 7, 8, 16, 19, 20 -> in.getShort();
+					case 9, 10, 11, 12, 17, 18 -> in.getInt();
+					case 15 -> { in.get(); in.getShort(); }
+					default -> { return List.of(); }
+				}
+			}
+			in.getShort(); in.getShort(); in.getShort();
+			int interfaces = in.getShort() & 0xFFFF; for (int i = 0; i < interfaces; i++) in.getShort();
+			int fields = in.getShort() & 0xFFFF; List<String> names = new ArrayList<>();
+			for (int i = 0; i < fields; i++) {
+				in.getShort(); names.add(utf[in.getShort() & 0xFFFF]); in.getShort();
+				int attributes = in.getShort() & 0xFFFF;
+				for (int a = 0; a < attributes; a++) { in.getShort(); int length = in.getInt(); in.position(in.position() + length); }
+			}
+			return names;
+		}
+	}
+	private static final class CountingStream extends java.io.FilterInputStream {
+		long position;
+		CountingStream(InputStream in) { super(in); }
+		@Override public int read() throws IOException { int b = super.read(); if (b >= 0) position++; return b; }
+		@Override public int read(byte[] b, int off, int len) throws IOException { int n = super.read(b, off, len); if (n > 0) position += n; return n; }
+		@Override public long skip(long n) throws IOException { long s = super.skip(n); position += s; return s; }
+	}
+}
