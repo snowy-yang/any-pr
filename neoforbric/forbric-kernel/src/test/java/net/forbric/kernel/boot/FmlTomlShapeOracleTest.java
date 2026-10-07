@@ -298,3 +298,93 @@ class FmlTomlShapeOracleTest {
 	/**
 	 * {@code IConfigurable.getConfigElement} on a mod's {@code [[mods]]} entry — the seam Sodium reads
 	 * {@code sodium:options} through — answers each path the way NeoForge's {@code NightConfigWrapper} does: a table
+	 * as its {@code valueMap()}, a scalar as itself, a missing key as empty.
+	 */
+	@Test
+	void configElementsAnswerEveryPathTheWayNeoForgesWrapperDoes() throws Exception {
+		UnmodifiableConfig entry = ((List<UnmodifiableConfig>) root(SHAPE_TOML).get(List.of("mods"))).get(0);
+		Map<String, Object> kernel = discovered(SHAPE_TOML, "META-INF/neoforge.mods.toml").getConfigElements();
+
+		try (URLClassLoader neo = neoOracle()) {
+			Object wrapper = wrapper(neo, NEO_WRAPPER, entry);
+			for (String[] path : List.of(new String[] {"sodium:options"}, new String[] {"custom"},
+					new String[] {"custom", "inner"}, new String[] {"custom", "inner", "x"}, new String[] {"modId"},
+					new String[] {"absent"}, new String[] {"custom", "absent"}, new String[] {"modId", "deeper"})) {
+				assertEquals(shape(element(wrapper, path)), shape(PassiveSeeder.lookup(kernel, new Object[] {path})),
+						String.join(".", path));
+			}
+		}
+	}
+
+	// --- the oracle -------------------------------------------------------------------------------------------
+
+	private static URLClassLoader neoOracle() throws IOException {
+		TestFixtures.require(Fixture.STAGED, Files.isRegularFile(NEO_CARRIER), "staged neoforge-runtime.jar absent");
+		return new URLClassLoader(new URL[] {NEO_CARRIER.toUri().toURL()}, FmlTomlShapeOracleTest.class.getClassLoader());
+	}
+
+	/** The FML's own wrapper, constructed over a parsed config exactly as its ModFileParser does. */
+	private static Object wrapper(ClassLoader loader, String name, UnmodifiableConfig config) throws Exception {
+		Constructor<?> ctor = Class.forName(name, true, loader).getConstructor(UnmodifiableConfig.class);
+		return ctor.newInstance(config);
+	}
+
+	static Optional<?> element(Object wrapper, String... path) throws Exception {
+		Method m = wrapper.getClass().getMethod("getConfigElement", String[].class);
+		m.setAccessible(true);
+		return (Optional<?>) m.invoke(wrapper, (Object) path);
+	}
+
+	private static UnmodifiableConfig root(String toml) {
+		return new TomlParser().parse(toml);
+	}
+
+	/** The kernel's side, through the whole discovery chain a jar actually takes to a {@link DiscoveredMod}. */
+	private DiscoveredMod discovered(String toml, String entryName) throws IOException {
+		List<DiscoveredMod> mods = discoveredAll(toml, entryName);
+		assertEquals(1, mods.size(), "one [[mods]] entry: " + mods);
+		return mods.get(0);
+	}
+
+	/** Every mod the file declares, in order. */
+	private List<DiscoveredMod> discoveredAll(String toml, String entryName) throws IOException {
+		Path jar = tmp.resolve("shape-" + Math.abs(toml.hashCode()) + "-" + entryName.hashCode() + ".jar");
+		try (ZipOutputStream zip = new ZipOutputStream(Files.newOutputStream(jar))) {
+			zip.putNextEntry(new ZipEntry(entryName));
+			zip.write(toml.getBytes(StandardCharsets.UTF_8));
+			zip.closeEntry();
+		}
+		return new ForbricModDiscoverer().discoverJar(jar);
+	}
+
+	private static String libjfTranslate() throws IOException {
+		try (InputStream in = FmlTomlShapeOracleTest.class.getResourceAsStream(
+				"/forge/libjf-translate-v1.neoforge.mods.toml")) {
+			return new String(in.readAllBytes(), StandardCharsets.UTF_8);
+		}
+	}
+
+	/**
+	 * The TYPE a reader can rely on, all the way down. {@code Config} is kept apart from other maps because that
+	 * distinction is the whole bug: a checkcast to {@code Config} passes on one and throws on the other, and a
+	 * reader branching on {@code instanceof Map} takes a different branch.
+	 */
+	static String shape(Object value) {
+		if (value instanceof Optional<?> optional) return optional.map(v -> "Optional[" + shape(v) + "]").orElse("empty");
+		if (value instanceof Config config) return "Config" + entries(config.valueMap());
+		if (value instanceof UnmodifiableConfig config) return "UnmodifiableConfig" + entries(config.valueMap());
+		if (value instanceof Map<?, ?> map) return "Map" + entries(map);
+		if (value instanceof List<?> list) {
+			List<String> out = new ArrayList<>();
+			for (Object element : list) out.add(shape(element));
+			return "List" + out;
+		}
+		return value == null ? "null" : value.getClass().getSimpleName() + "(" + value + ")";
+	}
+
+	private static String entries(Map<?, ?> map) {
+		Map<String, String> sorted = new TreeMap<>();
+		for (Map.Entry<?, ?> entry : map.entrySet()) sorted.put(String.valueOf(entry.getKey()), shape(entry.getValue()));
+		return sorted.toString();
+	}
+}
